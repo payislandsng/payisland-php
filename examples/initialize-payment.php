@@ -24,7 +24,7 @@ $payIsland = new PayIsland([
 ]);
 
 $response = $payIsland->transactions->initialize([
-    'callback_url' => 'https://example.com/webhooks/payisland',
+    'callback_url' => 'https://example.com/webhooks/payislands',
     'payment_item_id' => $paymentItemId,
     'transaction_reference' => 'order_' . time(),
     'channel' => 'card',

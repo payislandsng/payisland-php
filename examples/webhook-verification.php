@@ -27,4 +27,18 @@ $payIsland = new PayIsland([
 
 $isValid = $payIsland->webhooks->verifySignature($rawPayload, $signature, $webhookSecret);
 
-echo $isValid ? "Valid signature\n" : "Invalid signature\n";
+if (!$isValid) {
+    echo "Invalid signature\n";
+    exit(1);
+}
+
+$payload = json_decode($rawPayload, true);
+$reference = is_array($payload) ? ($payload['reference'] ?? null) : null;
+
+if ($reference) {
+    $verification = $payIsland->transactions->verify((string) $reference);
+    echo json_encode($verification, JSON_PRETTY_PRINT) . PHP_EOL;
+    exit(0);
+}
+
+echo "Valid signature. Verify the webhook reference before fulfillment.\n";

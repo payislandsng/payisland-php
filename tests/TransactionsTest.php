@@ -51,7 +51,7 @@ class TransactionsTest extends TestCase
         $this->assertSame('order_123', $response['data']['reference']);
         $this->assertCount(1, $history);
         $this->assertSame('GET', $history[0]['request']->getMethod());
-        $this->assertSame('/api/v1/transactions/in/verify/order_123', $history[0]['request']->getUri()->getPath());
+        $this->assertSame('/api/v1/transactions/in/check-transaction-status/order_123', $history[0]['request']->getUri()->getPath());
     }
 
     private function transactionsWithResponses(array &$history, array $responses): Transactions

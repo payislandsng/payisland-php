@@ -19,6 +19,6 @@ class Transactions
 
     public function verify(string $reference): array
     {
-        return $this->client->get('/api/v1/transactions/in/verify/' . rawurlencode($reference));
+        return $this->client->get('/api/v1/transactions/in/check-transaction-status/' . rawurlencode($reference));
     }
 }

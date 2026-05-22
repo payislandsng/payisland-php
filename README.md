@@ -34,7 +34,7 @@ PayIsland determines sandbox or live mode from the API key. The SDK does not exp
 
 ```php
 $response = $payIsland->transactions->initialize([
-    'callback_url' => 'https://example.com/webhooks/payisland',
+    'callback_url' => 'https://example.com/webhooks/payislands',
     'payment_item_id' => getenv('PAYISLAND_PAYMENT_ITEM_ID'),
     'transaction_reference' => 'order_' . time(),
     'channel' => 'card',
@@ -56,6 +56,9 @@ echo $response['data']['authorization_url'];
 $response = $payIsland->transactions->verify('order_123');
 ```
 
+This calls PayIsland's documented transaction status endpoint:
+`GET /api/v1/transactions/in/check-transaction-status/{reference}`.
+
 ## Webhook Verification
 
 ```php
@@ -67,6 +70,13 @@ $isValid = $payIsland->webhooks->verifySignature(
 ```
 
 Webhook signatures are verified with `hash_hmac('sha256', $payload, $secret)` and `hash_equals`.
+
+After receiving a webhook, always verify the transaction reference before fulfillment:
+
+```php
+$payload = json_decode($rawPayload, true);
+$verification = $payIsland->transactions->verify($payload['reference']);
+```
 
 ## Error Handling
 
