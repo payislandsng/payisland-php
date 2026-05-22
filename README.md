@@ -59,6 +59,8 @@ $response = $payIsland->transactions->verify('order_123');
 This calls PayIsland's documented transaction status endpoint:
 `GET /api/v1/transactions/in/check-transaction-status/{reference}`.
 
+For card transactions that require 3DS authentication, verification may return a pending status until the customer completes the challenge or PayIsland receives the final callback/webhook. Do not fulfill an order until verification returns a successful final status.
+
 ## Webhook Verification
 
 ```php
@@ -77,6 +79,8 @@ After receiving a webhook, always verify the transaction reference before fulfil
 $payload = json_decode($rawPayload, true);
 $verification = $payIsland->transactions->verify($payload['reference']);
 ```
+
+If verification is still pending after a 3DS card flow, wait for the final callback/webhook or check the transaction status again before fulfilling the order.
 
 ## Error Handling
 
