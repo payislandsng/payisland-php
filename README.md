@@ -1,5 +1,7 @@
 # PayIsland PHP SDK
 
+![CI](https://github.com/payislandsng/payisland-php/actions/workflows/ci.yml/badge.svg)
+
 Official PHP SDK for integrating with PayIsland payment APIs.
 
 ## Installation
